@@ -1,10 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { ConfigModule } from '@nestjs/config';
+import { EquipmentModule } from './interfaces/http/equipment/equipment.module';
+import { EquipmentMemoryRepositoryService } from './infrastructure/equipment/repositories/equipment.memory.repository.service';
+import appConfig from './config/app.config';
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [appConfig], // variables tipadas
+      // Alternativa con Joi (docs oficiales):
+      // validationSchema: Joi.object({
+      // PORT: Joi.number().default(3000),
+      // USE_FAKE_API: Joi.boolean().default(true),
+      // DATABASE_URL: Joi.string().optional(),
+      // })
+    }),
+    EquipmentModule,
+  ],
+  providers: [EquipmentMemoryRepositoryService],
 })
-export class AppModule {}
+export class AppModule { }
