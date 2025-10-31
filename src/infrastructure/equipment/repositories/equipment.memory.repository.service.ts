@@ -32,6 +32,7 @@ const seed: EquipmentEntity[] = [
 @Injectable()
 export class EquipmentMemoryRepositoryService implements EquipmentRepository {
     private data = [...seed];
+    
     async findAll() {
         return this.data;
     }

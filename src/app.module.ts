@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EquipmentModule } from './interfaces/http/equipment/equipment.module';
-import { EquipmentMemoryRepositoryService } from './infrastructure/equipment/repositories/equipment.memory.repository.service';
+import { MaintenanceModule } from './interfaces/http/maintenance/maintenance.module';
+import { MaintenanceMemoryRepositoryService } from './infrastructure/maintenance/repositories/maintenance.memory.repository.service';
 import appConfig from './config/app.config';
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import appConfig from './config/app.config';
       // })
     }),
     EquipmentModule,
+    MaintenanceModule,
   ],
-  providers: [EquipmentMemoryRepositoryService],
+  providers: [MaintenanceMemoryRepositoryService],
 })
 export class AppModule { }

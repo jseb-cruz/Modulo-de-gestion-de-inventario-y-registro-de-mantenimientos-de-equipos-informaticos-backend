@@ -18,6 +18,7 @@ export class EquipmentController {
         private readonly updateUC: UpdateEquipmentUsecase,
         private readonly removeUC: RemoveEquipmentUsecase,
     ) { }
+    
     @Get()
     findAll() {
         return this.listUC.execute();
@@ -31,8 +32,6 @@ export class EquipmentController {
         const entity = EquipmentEntity.create({
             id: crypto.randomUUID(),
             ...dto,
-            purchaseDate: dto.purchaseDate,
-            warrantyEnd: dto.warrantyEnd,
             metadata: dto.metadata ?? {},
         });
         return this.createUC.execute(entity);
