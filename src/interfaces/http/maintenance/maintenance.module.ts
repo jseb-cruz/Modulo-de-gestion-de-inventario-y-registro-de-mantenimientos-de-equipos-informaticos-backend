@@ -8,26 +8,30 @@ import { UpdateMaintenanceUsecase } from 'src/application/maintenance/use-cases/
 import { MaintenanceRepository } from 'src/domain/maintenance/repositories/maintenance.repository';
 import { MaintenanceMemoryRepositoryService } from 'src/infrastructure/maintenance/repositories/maintenance.memory.repository.service';
 import { MaintenanceController } from './maintenance.controller';
+import { PrismaModule } from '../../../infrastructure/database/prisma/prisma.module';
+import { MaintenancePrismaRepositoryService } from 'src/infrastructure/maintenance/repositories/maintenance.prisma.repository.service';
 @Module({
+  imports: [PrismaModule],
   controllers: [MaintenanceController],
   providers: [
     ListMaintenanceUsecase, FindMaintenanceUsecase, CreateMaintenanceUsecase,
     UpdateMaintenanceUsecase, RemoveMaintenanceUsecase,
     MaintenanceMemoryRepositoryService,
+    MaintenancePrismaRepositoryService,
     {
       provide: MaintenanceRepository,
       useFactory: (
         cfg: ConfigService,
         memory: MaintenanceMemoryRepositoryService,
-        /* prisma: MaintenancePrismaRepositoryService */
+        prisma: MaintenancePrismaRepositoryService
       ) => {
         const useFake = cfg.get<boolean>('app.useFakeApi', true);
         return useFake
           ? memory
-          : /* prisma */ memory;
+          : prisma;
       },
-      inject: [ConfigService, MaintenanceMemoryRepositoryService /*,
-MaintenancePrismaRepositoryService */ ],
+      inject: [ConfigService, MaintenanceMemoryRepositoryService,
+MaintenancePrismaRepositoryService ],
     },
   ]
 })
