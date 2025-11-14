@@ -3,6 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { EquipmentModule } from './interfaces/http/equipment/equipment.module';
 import { MaintenanceModule } from './interfaces/http/maintenance/maintenance.module';
 import { MaintenanceMemoryRepositoryService } from './infrastructure/maintenance/repositories/maintenance.memory.repository.service';
+import { PrismaService } from './infrastructure/database/prisma/prisma.service';
+import { PrismaModule } from './infrastructure/database/prisma/prisma.module';
+import { EquipmentPrismaRepositoryService } from './infrastructure/equipment/repositories/equipment.prisma.repository.service';
+import { MaintenancePrismaRepositoryService } from './infrastructure/maintenance/repositories/maintenance.prisma.repository.service';
 import appConfig from './config/app.config';
 @Module({
   imports: [
@@ -18,7 +22,8 @@ import appConfig from './config/app.config';
     }),
     EquipmentModule,
     MaintenanceModule,
+    PrismaModule,
   ],
-  providers: [MaintenanceMemoryRepositoryService],
+  providers: [MaintenanceMemoryRepositoryService, PrismaService, EquipmentPrismaRepositoryService, MaintenancePrismaRepositoryService],
 })
 export class AppModule { }

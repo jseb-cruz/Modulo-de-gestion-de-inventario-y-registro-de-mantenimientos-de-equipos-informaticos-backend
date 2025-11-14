@@ -8,26 +8,30 @@ import { UpdateEquipmentUsecase } from '../../../application/equipment/use-cases
 import { EquipmentRepository } from '../../../domain/equipment/repositories/equipment.repository';
 import { EquipmentMemoryRepositoryService } from '../../../infrastructure/equipment/repositories/equipment.memory.repository.service';
 import { EquipmentController } from './equipment.controller';
+import { PrismaModule } from '../../../infrastructure/database/prisma/prisma.module';
+import { EquipmentPrismaRepositoryService } from '../../../infrastructure/equipment/repositories/equipment.prisma.repository.service';
+
 @Module({
+  imports: [ PrismaModule ],
   controllers: [EquipmentController],
   providers: [
     ListEquipmentUsecase, FindEquipmentUsecase, CreateEquipmentUsecase,
     UpdateEquipmentUsecase, RemoveEquipmentUsecase,
     EquipmentMemoryRepositoryService,
+    EquipmentPrismaRepositoryService,
     {
       provide: EquipmentRepository,
       useFactory: (
         cfg: ConfigService,
         memory: EquipmentMemoryRepositoryService,
-        /* prisma: EquipmentPrismaRepositoryService */
+        prisma: EquipmentPrismaRepositoryService
       ) => {
         const useFake = cfg.get<boolean>('app.useFakeApi', true);
         return useFake
           ? memory
-          : /* prisma */ memory;
+          : prisma;
       },
-      inject: [ConfigService, EquipmentMemoryRepositoryService /*,
-EquipmentPrismaRepositoryService */ ],
+      inject: [ConfigService, EquipmentMemoryRepositoryService,EquipmentPrismaRepositoryService],
     },
   ]
 })

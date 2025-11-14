@@ -5,10 +5,11 @@ import { FindEquipmentUsecase } from '../../../application/equipment/use-cases/f
 import { ListEquipmentUsecase } from '../../../application/equipment/use-cases/list-equipment.usecase';
 import { RemoveEquipmentUsecase } from '../../../application/equipment/use-cases/remove-equipment.usecase';
 import { UpdateEquipmentUsecase } from '../../../application/equipment/use-cases/update-equipment.usecase';
-import { EquipmentEntity } from
-    '../../../domain/equipment/entities/equipment.entity';
+import { EquipmentEntity } from '../../../domain/equipment/entities/equipment.entity';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
+import { ApiBody } from '@nestjs/swagger';
+
 @Controller({ path: "equipment", version: '1' }) // /api/v1/equipment
 export class EquipmentController {
     constructor(
@@ -18,7 +19,7 @@ export class EquipmentController {
         private readonly updateUC: UpdateEquipmentUsecase,
         private readonly removeUC: RemoveEquipmentUsecase,
     ) { }
-    
+
     @Get()
     findAll() {
         return this.listUC.execute();
@@ -28,6 +29,41 @@ export class EquipmentController {
         return this.findUC.execute(id);
     }
     @Post()
+    @ApiBody({
+        type: CreateEquipmentDto,
+        examples: {
+            Basico: {
+                summary: 'Ejemplo básico',
+                description: 'Alta mínima con campos necesarios',
+                value: {
+                    assetTag: 'ASSET-0001',
+                    serialNumber: 'SN-ABC-001',
+                    model: 'Dell Latitude 5420',
+                    type: 'Laptop',
+                    status: 'Available',
+                    locationId: 'LOC-01',
+                    purchaseDate: '2023-02-10',
+                    warrantyEnd: '2026-02-10',
+                    metadata: { ram: 16, cpu: 'i7' }
+                }
+            },
+            EnUso: {
+                summary: 'Equipo en uso',
+                value: {
+                    assetTag: 'ASSET-0020',
+                    serialNumber: 'SN-XYZ-002',
+                    model: 'HP ProDesk 600',
+                    type: 'Desktop',
+                    status: 'InUse',
+                    locationId: 'LAB-02',
+                    purchaseDate: '2022-05-01',
+                    warrantyEnd: '2025-05-01',
+                    metadata: { os: 'Windows 11', owner: 'Sistemas' }
+                }
+            }
+        }
+    })
+
     async create(@Body() dto: CreateEquipmentDto) {
         const entity = EquipmentEntity.create({
             id: crypto.randomUUID(),
@@ -36,7 +72,38 @@ export class EquipmentController {
         });
         return this.createUC.execute(entity);
     }
+
     @Patch(':id')
+    @ApiBody({
+        description: 'Actualización parcial (PATCH). Incluye solo los campos a modificar.',
+        type: UpdateEquipmentDto,
+        examples: {
+            CambiarEstadoYUbicacion: {
+                summary: 'Cambio de estado y ubicación',
+                description: 'El equipo entra a reparación y se mueve al taller.',
+                value: {
+                    status: 'InRepair',
+                    locationId: 'WORKSHOP-01'
+                }
+            },
+            ActualizarGarantia: {
+                summary: 'Extensión de garantía',
+                description: 'Se amplía el fin de garantía sin tocar otros campos.',
+                value: {
+                    warrantyEnd: '2027-04-30'
+                }
+            },
+            CorreccionModeloYMetadata: {
+                summary: 'Corrección de modelo y metadatos',
+                description: 'Se corrige el modelo y se ajustan metadatos técnicos.',
+                value: {
+                    model: 'Dell Latitude 5450',
+                    metadata: { ram: 32, cpu: 'i7-1365U', ssd: '1TB' }
+                }
+            }
+        }
+    })
+
     async update(@Param('id') id: string, @Body() dto: UpdateEquipmentDto) {
         const patch: Partial<EquipmentEntity> = {
             ...dto,
