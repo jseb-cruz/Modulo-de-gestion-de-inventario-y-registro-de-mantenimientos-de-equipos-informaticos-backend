@@ -218,6 +218,7 @@ export type EquipmentWhereInput = {
   purchaseDate?: Prisma.DateTimeFilter<"Equipment"> | Date | string
   warrantyEnd?: Prisma.DateTimeFilter<"Equipment"> | Date | string
   metadata?: Prisma.JsonNullableFilter<"Equipment">
+  location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   maintenance?: Prisma.MaintenanceListRelationFilter
 }
 
@@ -232,6 +233,7 @@ export type EquipmentOrderByWithRelationInput = {
   purchaseDate?: Prisma.SortOrder
   warrantyEnd?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.LocationOrderByWithRelationInput
   maintenance?: Prisma.MaintenanceOrderByRelationAggregateInput
 }
 
@@ -249,6 +251,7 @@ export type EquipmentWhereUniqueInput = Prisma.AtLeast<{
   purchaseDate?: Prisma.DateTimeFilter<"Equipment"> | Date | string
   warrantyEnd?: Prisma.DateTimeFilter<"Equipment"> | Date | string
   metadata?: Prisma.JsonNullableFilter<"Equipment">
+  location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   maintenance?: Prisma.MaintenanceListRelationFilter
 }, "id">
 
@@ -291,10 +294,10 @@ export type EquipmentCreateInput = {
   model: string
   type: string
   status: string
-  locationId: string
   purchaseDate: Date | string
   warrantyEnd: Date | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  location: Prisma.LocationCreateNestedOneWithoutEquipmentsInput
   maintenance?: Prisma.MaintenanceCreateNestedManyWithoutEquipmentInput
 }
 
@@ -319,10 +322,10 @@ export type EquipmentUpdateInput = {
   model?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  location?: Prisma.LocationUpdateOneRequiredWithoutEquipmentsNestedInput
   maintenance?: Prisma.MaintenanceUpdateManyWithoutEquipmentNestedInput
 }
 
@@ -360,7 +363,6 @@ export type EquipmentUpdateManyMutationInput = {
   model?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -421,6 +423,16 @@ export type EquipmentScalarRelationFilter = {
   isNot?: Prisma.EquipmentWhereInput
 }
 
+export type EquipmentListRelationFilter = {
+  every?: Prisma.EquipmentWhereInput
+  some?: Prisma.EquipmentWhereInput
+  none?: Prisma.EquipmentWhereInput
+}
+
+export type EquipmentOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -443,6 +455,48 @@ export type EquipmentUpdateOneRequiredWithoutMaintenanceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EquipmentUpdateToOneWithWhereWithoutMaintenanceInput, Prisma.EquipmentUpdateWithoutMaintenanceInput>, Prisma.EquipmentUncheckedUpdateWithoutMaintenanceInput>
 }
 
+export type EquipmentCreateNestedManyWithoutLocationInput = {
+  create?: Prisma.XOR<Prisma.EquipmentCreateWithoutLocationInput, Prisma.EquipmentUncheckedCreateWithoutLocationInput> | Prisma.EquipmentCreateWithoutLocationInput[] | Prisma.EquipmentUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.EquipmentCreateOrConnectWithoutLocationInput | Prisma.EquipmentCreateOrConnectWithoutLocationInput[]
+  createMany?: Prisma.EquipmentCreateManyLocationInputEnvelope
+  connect?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+}
+
+export type EquipmentUncheckedCreateNestedManyWithoutLocationInput = {
+  create?: Prisma.XOR<Prisma.EquipmentCreateWithoutLocationInput, Prisma.EquipmentUncheckedCreateWithoutLocationInput> | Prisma.EquipmentCreateWithoutLocationInput[] | Prisma.EquipmentUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.EquipmentCreateOrConnectWithoutLocationInput | Prisma.EquipmentCreateOrConnectWithoutLocationInput[]
+  createMany?: Prisma.EquipmentCreateManyLocationInputEnvelope
+  connect?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+}
+
+export type EquipmentUpdateManyWithoutLocationNestedInput = {
+  create?: Prisma.XOR<Prisma.EquipmentCreateWithoutLocationInput, Prisma.EquipmentUncheckedCreateWithoutLocationInput> | Prisma.EquipmentCreateWithoutLocationInput[] | Prisma.EquipmentUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.EquipmentCreateOrConnectWithoutLocationInput | Prisma.EquipmentCreateOrConnectWithoutLocationInput[]
+  upsert?: Prisma.EquipmentUpsertWithWhereUniqueWithoutLocationInput | Prisma.EquipmentUpsertWithWhereUniqueWithoutLocationInput[]
+  createMany?: Prisma.EquipmentCreateManyLocationInputEnvelope
+  set?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  disconnect?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  delete?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  connect?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  update?: Prisma.EquipmentUpdateWithWhereUniqueWithoutLocationInput | Prisma.EquipmentUpdateWithWhereUniqueWithoutLocationInput[]
+  updateMany?: Prisma.EquipmentUpdateManyWithWhereWithoutLocationInput | Prisma.EquipmentUpdateManyWithWhereWithoutLocationInput[]
+  deleteMany?: Prisma.EquipmentScalarWhereInput | Prisma.EquipmentScalarWhereInput[]
+}
+
+export type EquipmentUncheckedUpdateManyWithoutLocationNestedInput = {
+  create?: Prisma.XOR<Prisma.EquipmentCreateWithoutLocationInput, Prisma.EquipmentUncheckedCreateWithoutLocationInput> | Prisma.EquipmentCreateWithoutLocationInput[] | Prisma.EquipmentUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.EquipmentCreateOrConnectWithoutLocationInput | Prisma.EquipmentCreateOrConnectWithoutLocationInput[]
+  upsert?: Prisma.EquipmentUpsertWithWhereUniqueWithoutLocationInput | Prisma.EquipmentUpsertWithWhereUniqueWithoutLocationInput[]
+  createMany?: Prisma.EquipmentCreateManyLocationInputEnvelope
+  set?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  disconnect?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  delete?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  connect?: Prisma.EquipmentWhereUniqueInput | Prisma.EquipmentWhereUniqueInput[]
+  update?: Prisma.EquipmentUpdateWithWhereUniqueWithoutLocationInput | Prisma.EquipmentUpdateWithWhereUniqueWithoutLocationInput[]
+  updateMany?: Prisma.EquipmentUpdateManyWithWhereWithoutLocationInput | Prisma.EquipmentUpdateManyWithWhereWithoutLocationInput[]
+  deleteMany?: Prisma.EquipmentScalarWhereInput | Prisma.EquipmentScalarWhereInput[]
+}
+
 export type EquipmentCreateWithoutMaintenanceInput = {
   id: string
   assetTag: string
@@ -450,10 +504,10 @@ export type EquipmentCreateWithoutMaintenanceInput = {
   model: string
   type: string
   status: string
-  locationId: string
   purchaseDate: Date | string
   warrantyEnd: Date | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  location: Prisma.LocationCreateNestedOneWithoutEquipmentsInput
 }
 
 export type EquipmentUncheckedCreateWithoutMaintenanceInput = {
@@ -492,10 +546,10 @@ export type EquipmentUpdateWithoutMaintenanceInput = {
   model?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  location?: Prisma.LocationUpdateOneRequiredWithoutEquipmentsNestedInput
 }
 
 export type EquipmentUncheckedUpdateWithoutMaintenanceInput = {
@@ -506,6 +560,124 @@ export type EquipmentUncheckedUpdateWithoutMaintenanceInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+}
+
+export type EquipmentCreateWithoutLocationInput = {
+  id: string
+  assetTag: string
+  serialNumber: string
+  model: string
+  type: string
+  status: string
+  purchaseDate: Date | string
+  warrantyEnd: Date | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  maintenance?: Prisma.MaintenanceCreateNestedManyWithoutEquipmentInput
+}
+
+export type EquipmentUncheckedCreateWithoutLocationInput = {
+  id: string
+  assetTag: string
+  serialNumber: string
+  model: string
+  type: string
+  status: string
+  purchaseDate: Date | string
+  warrantyEnd: Date | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  maintenance?: Prisma.MaintenanceUncheckedCreateNestedManyWithoutEquipmentInput
+}
+
+export type EquipmentCreateOrConnectWithoutLocationInput = {
+  where: Prisma.EquipmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.EquipmentCreateWithoutLocationInput, Prisma.EquipmentUncheckedCreateWithoutLocationInput>
+}
+
+export type EquipmentCreateManyLocationInputEnvelope = {
+  data: Prisma.EquipmentCreateManyLocationInput | Prisma.EquipmentCreateManyLocationInput[]
+  skipDuplicates?: boolean
+}
+
+export type EquipmentUpsertWithWhereUniqueWithoutLocationInput = {
+  where: Prisma.EquipmentWhereUniqueInput
+  update: Prisma.XOR<Prisma.EquipmentUpdateWithoutLocationInput, Prisma.EquipmentUncheckedUpdateWithoutLocationInput>
+  create: Prisma.XOR<Prisma.EquipmentCreateWithoutLocationInput, Prisma.EquipmentUncheckedCreateWithoutLocationInput>
+}
+
+export type EquipmentUpdateWithWhereUniqueWithoutLocationInput = {
+  where: Prisma.EquipmentWhereUniqueInput
+  data: Prisma.XOR<Prisma.EquipmentUpdateWithoutLocationInput, Prisma.EquipmentUncheckedUpdateWithoutLocationInput>
+}
+
+export type EquipmentUpdateManyWithWhereWithoutLocationInput = {
+  where: Prisma.EquipmentScalarWhereInput
+  data: Prisma.XOR<Prisma.EquipmentUpdateManyMutationInput, Prisma.EquipmentUncheckedUpdateManyWithoutLocationInput>
+}
+
+export type EquipmentScalarWhereInput = {
+  AND?: Prisma.EquipmentScalarWhereInput | Prisma.EquipmentScalarWhereInput[]
+  OR?: Prisma.EquipmentScalarWhereInput[]
+  NOT?: Prisma.EquipmentScalarWhereInput | Prisma.EquipmentScalarWhereInput[]
+  id?: Prisma.StringFilter<"Equipment"> | string
+  assetTag?: Prisma.StringFilter<"Equipment"> | string
+  serialNumber?: Prisma.StringFilter<"Equipment"> | string
+  model?: Prisma.StringFilter<"Equipment"> | string
+  type?: Prisma.StringFilter<"Equipment"> | string
+  status?: Prisma.StringFilter<"Equipment"> | string
+  locationId?: Prisma.StringFilter<"Equipment"> | string
+  purchaseDate?: Prisma.DateTimeFilter<"Equipment"> | Date | string
+  warrantyEnd?: Prisma.DateTimeFilter<"Equipment"> | Date | string
+  metadata?: Prisma.JsonNullableFilter<"Equipment">
+}
+
+export type EquipmentCreateManyLocationInput = {
+  id: string
+  assetTag: string
+  serialNumber: string
+  model: string
+  type: string
+  status: string
+  purchaseDate: Date | string
+  warrantyEnd: Date | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+}
+
+export type EquipmentUpdateWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assetTag?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  maintenance?: Prisma.MaintenanceUpdateManyWithoutEquipmentNestedInput
+}
+
+export type EquipmentUncheckedUpdateWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assetTag?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  maintenance?: Prisma.MaintenanceUncheckedUpdateManyWithoutEquipmentNestedInput
+}
+
+export type EquipmentUncheckedUpdateManyWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assetTag?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warrantyEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -553,6 +725,7 @@ export type EquipmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   purchaseDate?: boolean
   warrantyEnd?: boolean
   metadata?: boolean
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   maintenance?: boolean | Prisma.Equipment$maintenanceArgs<ExtArgs>
   _count?: boolean | Prisma.EquipmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["equipment"]>
@@ -568,6 +741,7 @@ export type EquipmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   purchaseDate?: boolean
   warrantyEnd?: boolean
   metadata?: boolean
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["equipment"]>
 
 export type EquipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -581,6 +755,7 @@ export type EquipmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   purchaseDate?: boolean
   warrantyEnd?: boolean
   metadata?: boolean
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["equipment"]>
 
 export type EquipmentSelectScalar = {
@@ -598,15 +773,21 @@ export type EquipmentSelectScalar = {
 
 export type EquipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetTag" | "serialNumber" | "model" | "type" | "status" | "locationId" | "purchaseDate" | "warrantyEnd" | "metadata", ExtArgs["result"]["equipment"]>
 export type EquipmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   maintenance?: boolean | Prisma.Equipment$maintenanceArgs<ExtArgs>
   _count?: boolean | Prisma.EquipmentCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type EquipmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type EquipmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type EquipmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
+}
+export type EquipmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
+}
 
 export type $EquipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Equipment"
   objects: {
+    location: Prisma.$LocationPayload<ExtArgs>
     maintenance: Prisma.$MaintenancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1014,6 +1195,7 @@ readonly fields: EquipmentFieldRefs;
  */
 export interface Prisma__EquipmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  location<T extends Prisma.LocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LocationDefaultArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   maintenance<T extends Prisma.Equipment$maintenanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Equipment$maintenanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1303,6 +1485,10 @@ export type EquipmentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.EquipmentCreateManyInput | Prisma.EquipmentCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EquipmentIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1373,6 +1559,10 @@ export type EquipmentUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many Equipment to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EquipmentIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

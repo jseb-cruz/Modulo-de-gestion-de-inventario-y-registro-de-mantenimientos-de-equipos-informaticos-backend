@@ -27,3 +27,8 @@ export type Equipment = Prisma.EquipmentModel
  * 
  */
 export type Maintenance = Prisma.MaintenanceModel
+/**
+ * Model Location
+ * 
+ */
+export type Location = Prisma.LocationModel

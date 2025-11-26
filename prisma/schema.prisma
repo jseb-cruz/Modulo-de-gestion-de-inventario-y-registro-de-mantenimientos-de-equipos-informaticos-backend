@@ -16,6 +16,7 @@ model Equipment {
  type String
  status String
  locationId String
+ location Location @relation(fields: [locationId], references: [id])
  purchaseDate DateTime
  warrantyEnd DateTime
  metadata Json?
@@ -37,4 +38,19 @@ model Maintenance {
   equipment Equipment @relation(fields: [equipmentId], references: [id])
 
   @@index([equipmentId])
+}
+
+model Location {
+  id        String  @id
+  code      String  @unique
+  name      String
+  type      String
+  status    String
+  building  String?
+  floor     String?
+  room      String?
+  address   String?
+  metadata  Json?
+
+  equipments Equipment[]
 }

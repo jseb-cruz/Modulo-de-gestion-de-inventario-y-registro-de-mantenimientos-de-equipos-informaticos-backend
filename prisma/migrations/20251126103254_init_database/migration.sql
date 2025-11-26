@@ -29,8 +29,30 @@ CREATE TABLE "Maintenance" (
     CONSTRAINT "Maintenance_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Location" (
+    "id" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
+    "building" TEXT,
+    "floor" TEXT,
+    "room" TEXT,
+    "address" TEXT,
+    "metadata" JSONB,
+
+    CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE INDEX "Maintenance_equipmentId_idx" ON "Maintenance"("equipmentId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Location_code_key" ON "Location"("code");
+
+-- AddForeignKey
+ALTER TABLE "Equipment" ADD CONSTRAINT "Equipment_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "Location"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Maintenance" ADD CONSTRAINT "Maintenance_equipmentId_fkey" FOREIGN KEY ("equipmentId") REFERENCES "Equipment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
