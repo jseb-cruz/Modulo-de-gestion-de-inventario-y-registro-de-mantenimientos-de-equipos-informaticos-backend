@@ -8,6 +8,7 @@ import { PrismaModule } from './infrastructure/database/prisma/prisma.module';
 import { EquipmentPrismaRepositoryService } from './infrastructure/equipment/repositories/equipment.prisma.repository.service';
 import { MaintenancePrismaRepositoryService } from './infrastructure/maintenance/repositories/maintenance.prisma.repository.service';
 import { LocationModule } from './interfaces/http/location/location.module';
+import { LocationMemoryRepositoryService } from './infrastructure/location/repositories/location.memory.repository.service';
 import appConfig from './config/app.config';
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import appConfig from './config/app.config';
     PrismaModule,
     LocationModule,
   ],
-  providers: [MaintenanceMemoryRepositoryService, PrismaService, EquipmentPrismaRepositoryService, MaintenancePrismaRepositoryService],
+  providers: [MaintenanceMemoryRepositoryService, PrismaService, EquipmentPrismaRepositoryService, MaintenancePrismaRepositoryService, LocationMemoryRepositoryService],
 })
 export class AppModule { }
