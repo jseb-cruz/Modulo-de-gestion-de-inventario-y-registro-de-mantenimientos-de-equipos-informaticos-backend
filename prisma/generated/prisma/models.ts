@@ -11,4 +11,5 @@
 export type * from './models/Equipment'
 export type * from './models/Maintenance'
 export type * from './models/Location'
+export type * from './models/User'
 export type * from './commonInputTypes'

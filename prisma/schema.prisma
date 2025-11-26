@@ -54,3 +54,15 @@ model Location {
 
   equipments Equipment[]
 }
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      String   @default("User") // Admin | User
+  status    String   @default("Active")
+  password  String   // hashed
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

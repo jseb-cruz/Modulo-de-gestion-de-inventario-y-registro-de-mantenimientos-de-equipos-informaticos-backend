@@ -57,3 +57,8 @@ export type Maintenance = Prisma.MaintenanceModel
  * 
  */
 export type Location = Prisma.LocationModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

@@ -11,6 +11,8 @@ import { LocationModule } from './interfaces/http/location/location.module';
 import { LocationMemoryRepositoryService } from './infrastructure/location/repositories/location.memory.repository.service';
 import { LocationPrismaRepositoryService } from './infrastructure/location/repositories/location.prisma.repository.service';
 import appConfig from './config/app.config';
+import { AuthModule } from './interfaces/auth/auth.module';
+import { UserModule } from './interfaces/user/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,6 +29,8 @@ import appConfig from './config/app.config';
     MaintenanceModule,
     PrismaModule,
     LocationModule,
+    AuthModule,
+    UserModule,
   ],
   providers: [MaintenanceMemoryRepositoryService, PrismaService, EquipmentPrismaRepositoryService, MaintenancePrismaRepositoryService, LocationMemoryRepositoryService, LocationPrismaRepositoryService],
 })
