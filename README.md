@@ -49,7 +49,7 @@ Swagger: `http://localhost:3000/docs`
 ## 7. Despliegue
 1) Ajusta `.env` de producción (DB y JWT).  
 2) Ejecuta migraciones: `npx prisma migrate deploy`.  
-3) Construye y levanta con PM2/Docker/servicio: `npm start`  
+3) Construye y levanta con PM2/Docker/servicio: `npm run start`  
 4) Asegura puerto expuesto (p. ej. 3000) o un reverse proxy.
 
 ## 8. Endpoints principales (v1)
@@ -111,5 +111,6 @@ classDiagram
     room: string?
   }
   Equipment "1" -- "0..*" Maintenance : has
-  Location "1" -- "0..*" Equipment : hosts
-```
+  Location "1" -- "0..*"
+
+  ![alt text](image.png)
