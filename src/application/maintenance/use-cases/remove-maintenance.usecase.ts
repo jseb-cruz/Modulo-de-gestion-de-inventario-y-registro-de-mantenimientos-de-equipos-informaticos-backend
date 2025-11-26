@@ -1,8 +1,6 @@
 import { Inject } from "@nestjs/common";
-import { MaintenanceRepository } from
-    "../../../domain/maintenance/repositories/maintenance.repository";
-import { MaintenanceEntity } from
-    "../../../domain/maintenance/entities/maintenance.entity";
+import { MaintenanceRepository } from "../../../domain/maintenance/repositories/maintenance.repository";
+
 export class RemoveMaintenanceUsecase {
     constructor(
         @Inject(MaintenanceRepository) private readonly repo: MaintenanceRepository
