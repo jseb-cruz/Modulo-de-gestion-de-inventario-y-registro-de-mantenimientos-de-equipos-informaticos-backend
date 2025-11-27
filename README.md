@@ -111,6 +111,6 @@ classDiagram
     room: string?
   }
   Equipment "1" -- "0..*" Maintenance : has
-  Location "1" -- "0..*"
+  Location "1" -- "0..*" Location
 
   ![alt text](image.png)

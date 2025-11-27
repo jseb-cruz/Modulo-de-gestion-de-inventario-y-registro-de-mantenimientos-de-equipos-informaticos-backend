@@ -7,8 +7,8 @@ export class UpdateEquipmentUsecase {
     constructor(
         @Inject(EquipmentRepository) private readonly repo: EquipmentRepository
     ) { }
+    // Aplica cambios parciales al equipo indicado
     execute(id: string, patch: Partial<EquipmentEntity>) {
         return this.repo.update(id,patch);
     }
 }
-

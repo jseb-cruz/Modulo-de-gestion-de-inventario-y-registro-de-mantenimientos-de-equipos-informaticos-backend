@@ -12,6 +12,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
+    // Verifica credenciales contra el repositorio y compara hash
     const user = await this.users.findByEmail(email);
     if (!user) return null;
     const match = await bcrypt.compare(password, user.password);
@@ -20,6 +21,7 @@ export class AuthService {
   }
 
   async login(input: LoginDto) {
+    // Genera JWT y devuelve datos seguros del usuario autenticado
     const user = await this.validateUser(input.email, input.password);
     if (!user) throw new UnauthorizedException('Invalid credentials');
     const payload = { sub: user.id, email: user.email, role: user.role };

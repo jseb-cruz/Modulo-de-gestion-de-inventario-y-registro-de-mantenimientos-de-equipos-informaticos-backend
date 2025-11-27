@@ -6,9 +6,11 @@ type ExtendedPrismaClient = PrismaClient & {
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
     async onModuleInit() {
+        // Establece conexión inicial al levantar el módulo
         await this.$connect();
     }
     async enableShutdownHooks(app: INestApplication) {
+        // Cierra la app de Nest cuando Prisma detecta beforeExit
         (this as ExtendedPrismaClient).$on('beforeExit', async () => await
             app.close());
     }

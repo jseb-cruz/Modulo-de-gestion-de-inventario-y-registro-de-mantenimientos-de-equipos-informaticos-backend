@@ -20,11 +20,13 @@ export class MaintenanceController {
     ) { }
 
     @Get()
+    // Lista todas las tareas de mantenimiento
     findAll() {
         return this.listUC.execute();
     }
 
     @Get(':id')
+    // Busca una tarea de mantenimiento por id
     findById(@Param('id') id: string) {
         return this.findUC.execute(id);
     }
@@ -59,6 +61,7 @@ export class MaintenanceController {
             }
         }
     })
+    // Crea una tarea de mantenimiento
     async create(@Body() dto: CreateMaintenanceDto) {
         const entity = MaintenanceEntity.create({
             id: crypto.randomUUID(),
@@ -91,6 +94,7 @@ export class MaintenanceController {
             }
         }
     })
+    // Actualiza parcialmente una tarea de mantenimiento
     async update(@Param('id') id: string, @Body() dto: UpdateMaintenanceDto) {
         const patch: Partial<MaintenanceEntity> = {
             ...dto,
@@ -101,6 +105,7 @@ export class MaintenanceController {
     }
 
     @Delete(':id')
+    // Elimina una tarea de mantenimiento
     async remove(@Param('id') id: string) {
         await this.removeUC.execute(id);
         return { ok: true };

@@ -33,15 +33,19 @@ const seed: EquipmentEntity[] = [
 export class EquipmentMemoryRepositoryService implements EquipmentRepository {
     private data = [...seed];
     
+    // Devuelve todos los equipos en memoria
     async findAll() {
         return this.data;
     }
+    // Busca un equipo por id
     async findById(id: string) {
         return this.data.find(e => e.id === id) ?? null;
     }
+    // Inserta un nuevo equipo en el arreglo
     async create(input: EquipmentEntity) {
         this.data = [input, ...this.data]; return input;
     }
+    // Actualiza un equipo existente fusionando el patch
     async update(id: string, patch: Partial<EquipmentEntity>) {
         const i = this.data.findIndex(e => e.id === id);
         if (i < 0) {
@@ -63,6 +67,7 @@ export class EquipmentMemoryRepositoryService implements EquipmentRepository {
         this.data[i] = updated;
         return updated;
     }
+    // Elimina un equipo en memoria
     async remove(id: string) {
         this.data = this.data.filter(e => e.id !== id);
     }

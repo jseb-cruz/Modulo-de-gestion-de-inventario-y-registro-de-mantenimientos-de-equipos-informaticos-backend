@@ -5,6 +5,7 @@ export class ListLocationUsecase {
     constructor(
         @Inject(LocationRepository) private readonly repo: LocationRepository
     ) { }
+    // Lista todas las ubicaciones existentes
     execute() {
         return this.repo.findAll();
     }

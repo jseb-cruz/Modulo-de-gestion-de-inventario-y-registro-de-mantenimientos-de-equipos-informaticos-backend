@@ -6,6 +6,7 @@ export class FindLocationUsecase {
     constructor(
         @Inject(LocationRepository) private readonly repo: LocationRepository
     ) { }
+    // Obtiene una ubicación por id
     execute(id: string): Promise<LocationEntity | null> {
         return this.repo.findById(id);
     }

@@ -6,6 +6,7 @@ import { HttpExceptionFilter } from './interfaces/http/common/http-exception.fil
 import { TransformInterceptor } from './interfaces/http/common/transform.interceptor';
 
 async function bootstrap() {
+  // Crea la app Nest, aplica prefijos/versionado y configura pipes/interceptores/Swagger
   const app = await NestFactory.create(AppModule);
   // /api
   app.setGlobalPrefix('api');
@@ -29,6 +30,7 @@ async function bootstrap() {
   const doc = SwaggerModule.createDocument(app as any, config);
   SwaggerModule.setup('docs', app as any, doc);
 
+  // Levanta el servidor en el puerto definido por env
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

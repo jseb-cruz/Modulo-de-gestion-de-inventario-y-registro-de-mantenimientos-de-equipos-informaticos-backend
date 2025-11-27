@@ -33,19 +33,23 @@ const seed: LocationEntity[] = [
 export class LocationMemoryRepositoryService implements LocationRepository {
     private data = [...seed];
 
+    // Lista todas las ubicaciones guardadas en memoria
     async findAll() {
         return this.data;
     }
 
+    // Busca una ubicación por id en la colección en memoria
     async findById(id: string) {
         return this.data.find(l => l.id === id) ?? null;
     }
 
+    // Inserta una nueva ubicación
     async create(input: LocationEntity) {
         this.data = [input, ...this.data];
         return input;
     }
 
+    // Actualiza campos de una ubicación existente
     async update(id: string, patch: Partial<LocationEntity>) {
         const index = this.data.findIndex(l => l.id === id);
         if (index < 0) {
@@ -68,6 +72,7 @@ export class LocationMemoryRepositoryService implements LocationRepository {
         return updated;
     }
 
+    // Elimina una ubicación en memoria
     async remove(id: string) {
         this.data = this.data.filter(l => l.id !== id);
     }

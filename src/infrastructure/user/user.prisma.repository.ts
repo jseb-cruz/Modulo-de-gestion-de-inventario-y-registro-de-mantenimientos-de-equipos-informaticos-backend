@@ -21,21 +21,25 @@ function toEntity(row: any): User {
 export class UserPrismaRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  // Lista todos los usuarios en la tabla User
   async findAll(): Promise<User[]> {
     const rows = await this.prisma.user.findMany();
     return rows.map(toEntity);
   }
 
+  // Busca un usuario por id
   async findById(id: string): Promise<User | null> {
     const row = await this.prisma.user.findUnique({ where: { id } });
     return row ? toEntity(row) : null;
   }
 
+  // Busca un usuario por email
   async findByEmail(email: string): Promise<User | null> {
     const row = await this.prisma.user.findUnique({ where: { email } });
     return row ? toEntity(row) : null;
   }
 
+  // Crea un usuario persistiendo contraseña hasheada
   async create(input: CreateUserData): Promise<User> {
     const row = await this.prisma.user.create({
       data: {
@@ -50,6 +54,7 @@ export class UserPrismaRepository implements UserRepository {
     return toEntity(row);
   }
 
+  // Actualiza campos del usuario
   async update(id: string, input: UpdateUserData): Promise<User> {
     const row = await this.prisma.user.update({
       where: { id },
@@ -65,6 +70,7 @@ export class UserPrismaRepository implements UserRepository {
     return toEntity(row);
   }
 
+  // Elimina un usuario por id
   async remove(id: string): Promise<void> {
     await this.prisma.user.delete({ where: { id } });
   }

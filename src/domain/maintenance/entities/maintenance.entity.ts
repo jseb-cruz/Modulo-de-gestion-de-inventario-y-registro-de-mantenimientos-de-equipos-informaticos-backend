@@ -28,6 +28,7 @@ export class MaintenanceEntity {
         public readonly notes?: string,
     ) { }
 
+    // Fabrica la entidad validando campos clave y parseando fechas
     static create(input: {
         id: string;
         equipmentId: string;
@@ -80,6 +81,7 @@ export class MaintenanceEntity {
         );
     }
 
+    // Indica si el mantenimiento fue completado
     isCompleted(): boolean {
         return this.status === 'Done';
     }

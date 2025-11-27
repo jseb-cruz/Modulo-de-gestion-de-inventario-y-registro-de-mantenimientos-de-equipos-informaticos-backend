@@ -13,6 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // Inserta los datos del payload en la request como user
   async validate(payload: any) {
     return { userId: payload.sub, email: payload.email, role: payload.role };
   }

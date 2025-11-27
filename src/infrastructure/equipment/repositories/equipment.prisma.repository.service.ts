@@ -17,14 +17,17 @@ function toEntity(result: any): EquipmentEntity {
 @Injectable()
 export class EquipmentPrismaRepositoryService implements EquipmentRepository {
     constructor(private readonly prisma: PrismaService) { }
+    // Lista equipos desde la base de datos
     async findAll(): Promise<EquipmentEntity[]> {
         const rows = await this.prisma.equipment.findMany();
         return rows.map(toEntity);
     }
+    // Busca un equipo por id
     async findById(id: string): Promise<EquipmentEntity | null> {
         const r = await this.prisma.equipment.findUnique({ where: { id } });
         return r ? toEntity(r) : null;
     }
+    // Crea un registro de equipo en la tabla Equipment
     async create(input: EquipmentEntity): Promise<EquipmentEntity> {
         const r = await this.prisma.equipment.create({
             data: {
@@ -39,6 +42,7 @@ export class EquipmentPrismaRepositoryService implements EquipmentRepository {
         });
         return toEntity(r);
     }
+    // Actualiza campos parciales de un equipo
     async update(id: string, patch: Partial<EquipmentEntity>):
         Promise<EquipmentEntity> {
         const r = await this.prisma.equipment.update({
@@ -56,6 +60,7 @@ export class EquipmentPrismaRepositoryService implements EquipmentRepository {
         });
         return toEntity(r);
     }
+    // Borra un equipo por id
     async remove(id: string): Promise<void> {
         await this.prisma.equipment.delete({ where: { id } });
     }

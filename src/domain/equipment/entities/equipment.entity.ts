@@ -14,6 +14,7 @@ export class EquipmentEntity {
         public readonly warrantyEnd: Date,
         public readonly metadata: Map<string, unknown>,
     ) { }
+    // Fabrica una entidad validando campos obligatorios y normalizando tipos
     static create(input: {
         id: string; assetTag: string; serialNumber: string; model: string;
         type: EquipmentType; status: EquipmentStatus; locationId: string;

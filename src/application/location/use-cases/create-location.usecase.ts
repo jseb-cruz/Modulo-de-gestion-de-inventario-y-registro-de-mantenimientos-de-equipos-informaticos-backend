@@ -6,6 +6,7 @@ export class CreateLocationUsecase {
     constructor(
         @Inject(LocationRepository) private readonly repo: LocationRepository
     ) { }
+    // Persiste una nueva ubicación
     execute(input: LocationEntity) {
         return this.repo.create(input);
     }

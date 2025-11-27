@@ -7,6 +7,7 @@ export class FindEquipmentUsecase {
     constructor(
         @Inject(EquipmentRepository) private readonly repo: EquipmentRepository
     ) { }
+    // Obtiene un equipo por id
     execute(id: string): Promise<EquipmentEntity | null> {
         return this.repo.findById(id);
     }

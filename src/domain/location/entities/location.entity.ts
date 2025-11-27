@@ -26,6 +26,7 @@ export class LocationEntity {
         public readonly metadata: Map<string, unknown> = new Map(),
     ) { }
 
+    // Crea una instancia validando campos y normalizando metadatos
     static create(input: {
         id: string;
         code: string;
@@ -66,18 +67,22 @@ export class LocationEntity {
         );
     }
 
+    // Estado: activa
     isActive(): boolean {
         return this.status === 'Active';
     }
 
+    // Estado: inactiva
     isInactive(): boolean {
         return this.status === 'Inactive';
     }
 
+    // Estado: en mantenimiento
     isUnderMaintenance(): boolean {
         return this.status === 'UnderMaintenance';
     }
 
+    // Estado: deprecada
     isDeprecated(): boolean {
         return this.status === 'Deprecated';
     }

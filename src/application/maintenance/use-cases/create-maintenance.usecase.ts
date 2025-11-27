@@ -7,6 +7,7 @@ export class CreateMaintenanceUsecase {
     constructor(
         @Inject(MaintenanceRepository) private readonly repo: MaintenanceRepository
     ) { }
+    // Crea un nuevo registro de mantenimiento
     execute(input: MaintenanceEntity) {
         return this.repo.create(input);
     }

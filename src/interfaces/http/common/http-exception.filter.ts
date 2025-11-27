@@ -6,6 +6,7 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse();
     const req = ctx.getRequest<Request>();
+    // Normaliza la estructura de error HTTP
     const status = exception instanceof HttpException
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR;

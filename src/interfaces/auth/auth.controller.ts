@@ -7,6 +7,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
+  // Autentica credenciales y devuelve JWT + datos seguros del usuario
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }

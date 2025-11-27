@@ -26,10 +26,12 @@ export class User {
   get createdAt() { return this.props.createdAt; }
   get updatedAt() { return this.props.updatedAt; }
 
+  // Indica si el usuario está activo
   isActive(): boolean {
     return this.props.status === 'Active';
   }
 
+  // Devuelve la representación segura sin contraseña
   toSafe() {
     const { password, ...rest } = this.props;
     return rest;

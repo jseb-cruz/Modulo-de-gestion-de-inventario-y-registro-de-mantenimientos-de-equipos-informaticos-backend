@@ -6,6 +6,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
+  // Endpoint de salud que retorna un saludo simple
   getHello(): string {
     return this.appService.getHello();
   }

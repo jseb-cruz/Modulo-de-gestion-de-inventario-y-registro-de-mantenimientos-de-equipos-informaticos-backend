@@ -21,10 +21,12 @@ export class EquipmentController {
     ) { }
 
     @Get()
+    // Lista todos los equipos (fuente memoria o Prisma según config)
     findAll() {
         return this.listUC.execute();
     }
     @Get(':id')
+    // Recupera un equipo por id
     findById(@Param('id') id: string) {
         return this.findUC.execute(id);
     }
@@ -64,6 +66,7 @@ export class EquipmentController {
         }
     })
 
+    // Crea un equipo nuevo a partir del DTO validado
     async create(@Body() dto: CreateEquipmentDto) {
         const entity = EquipmentEntity.create({
             id: crypto.randomUUID(),
@@ -104,6 +107,7 @@ export class EquipmentController {
         }
     })
 
+    // Aplica un patch parcial al equipo indicado
     async update(@Param('id') id: string, @Body() dto: UpdateEquipmentDto) {
         const patch: Partial<EquipmentEntity> = {
             ...dto,
@@ -116,6 +120,7 @@ export class EquipmentController {
         return this.updateUC.execute(id, patch);
     }
     @Delete(':id')
+    // Elimina un equipo por id
     async remove(@Param('id') id: string) {
         await this.removeUC.execute(id);
         return { ok: true };

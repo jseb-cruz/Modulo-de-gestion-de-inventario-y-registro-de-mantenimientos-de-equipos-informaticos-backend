@@ -9,17 +9,20 @@ export class UserService {
   constructor(@Inject('UserRepository') private readonly users: UserRepository) {}
 
   async findAll() {
+    // Devuelve todos los usuarios en formato seguro (sin password)
     const list = await this.users.findAll();
     return list.map(u => u.toSafe());
   }
 
   async findOne(id: string) {
+    // Busca un usuario por id o lanza 404
     const user = await this.users.findById(id);
     if (!user) throw new NotFoundException('User not found');
     return user.toSafe();
   }
 
   async create(input: CreateUserDto) {
+    // Registra un usuario nuevo con hash de contraseña y evita duplicados
     const exists = await this.users.findByEmail(input.email);
     if (exists) throw new ConflictException('Email already registered');
     const hashed = await bcrypt.hash(input.password, 10);
@@ -35,6 +38,7 @@ export class UserService {
   }
 
   async update(id: string, input: UpdateUserDto) {
+    // Actualiza datos parciales, re-hasheando si se envía nueva contraseña
     const user = await this.users.findById(id);
     if (!user) throw new NotFoundException('User not found');
     const data: any = { ...input };
@@ -46,6 +50,7 @@ export class UserService {
   }
 
   async remove(id: string) {
+    // Elimina un usuario existente
     await this.users.remove(id);
   }
 }

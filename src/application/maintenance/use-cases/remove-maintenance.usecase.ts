@@ -5,6 +5,7 @@ export class RemoveMaintenanceUsecase {
     constructor(
         @Inject(MaintenanceRepository) private readonly repo: MaintenanceRepository
     ) { }
+    // Elimina un mantenimiento por id
     execute(id: string): Promise<void> {
         return this.repo.remove(id);
     }

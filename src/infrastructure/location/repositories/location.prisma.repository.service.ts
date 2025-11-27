@@ -23,16 +23,19 @@ function toEntity(result: any): LocationEntity {
 export class LocationPrismaRepositoryService implements LocationRepository {
     constructor(private readonly prisma: PrismaService) { }
 
+    // Lista ubicaciones desde la base de datos
     async findAll(): Promise<LocationEntity[]> {
         const rows = await this.prisma.location.findMany();
         return rows.map(toEntity);
     }
 
+    // Busca una ubicación por id
     async findById(id: string): Promise<LocationEntity | null> {
         const row = await this.prisma.location.findUnique({ where: { id } });
         return row ? toEntity(row) : null;
     }
 
+    // Crea una ubicación en la tabla Location
     async create(input: LocationEntity): Promise<LocationEntity> {
         const row = await this.prisma.location.create({
             data: {
@@ -51,6 +54,7 @@ export class LocationPrismaRepositoryService implements LocationRepository {
         return toEntity(row);
     }
 
+    // Actualiza campos parciales de una ubicación
     async update(id: string, patch: Partial<LocationEntity>): Promise<LocationEntity> {
         const row = await this.prisma.location.update({
             where: { id },
@@ -71,6 +75,7 @@ export class LocationPrismaRepositoryService implements LocationRepository {
         return toEntity(row);
     }
 
+    // Elimina una ubicación por id
     async remove(id: string): Promise<void> {
         await this.prisma.location.delete({ where: { id } });
     }

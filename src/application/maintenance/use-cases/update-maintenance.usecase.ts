@@ -7,6 +7,7 @@ export class UpdateMaintenanceUsecase {
     constructor(
         @Inject(MaintenanceRepository) private readonly repo: MaintenanceRepository
     ) { }
+    // Aplica actualizaciones parciales a un mantenimiento
     execute(id: string, patch: Partial<MaintenanceEntity>) {
         return this.repo.update(id, patch);
     }

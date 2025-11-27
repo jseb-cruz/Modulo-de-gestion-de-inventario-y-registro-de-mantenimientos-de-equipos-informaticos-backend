@@ -20,11 +20,13 @@ export class LocationController {
     ) { }
 
     @Get()
+    // Lista todas las ubicaciones registradas
     findAll() {
         return this.listUC.execute();
     }
 
     @Get(':id')
+    // Obtiene una ubicación por id
     findById(@Param('id') id: string) {
         return this.findUC.execute(id);
     }
@@ -59,6 +61,7 @@ export class LocationController {
             }
         }
     })
+    // Crea una nueva ubicación con metadatos opcionales
     async create(@Body() dto: CreateLocationDto) {
         const entity = LocationEntity.create({
             id: crypto.randomUUID(),
@@ -88,6 +91,7 @@ export class LocationController {
             }
         }
     })
+    // Actualiza parcialmente los datos de una ubicación
     async update(@Param('id') id: string, @Body() dto: UpdateLocationDto) {
         const patch: Partial<LocationEntity> = {
             ...dto,
@@ -97,6 +101,7 @@ export class LocationController {
     }
 
     @Delete(':id')
+    // Elimina una ubicación por id
     async remove(@Param('id') id: string) {
         await this.removeUC.execute(id);
         return { ok: true };

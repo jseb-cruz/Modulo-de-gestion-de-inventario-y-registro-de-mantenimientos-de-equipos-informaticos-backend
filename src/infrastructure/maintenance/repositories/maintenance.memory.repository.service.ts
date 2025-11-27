@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable } from '@nestjs/common';
 import { MaintenanceEntity } from '../../../domain/maintenance/entities/maintenance.entity';
 import { MaintenanceRepository } from '../../../domain/maintenance/repositories/maintenance.repository';
 
@@ -31,18 +31,22 @@ const seed: MaintenanceEntity[] = [
 export class MaintenanceMemoryRepositoryService implements MaintenanceRepository {
     private data = [...seed];
 
+    // Lista los mantenimientos almacenados en memoria
     async findAll() {
         return this.data;
     }
 
+    // Busca un mantenimiento por id
     async findById(id: string) {
         return this.data.find(m => m.id === id) ?? null;
     }
 
+    // Inserta un nuevo mantenimiento en la coleccion
     async create(input: MaintenanceEntity) {
         this.data = [input, ...this.data];return input;
     }
 
+    // Actualiza un mantenimiento existente aplicando un patch
     async update(id: string, patch: Partial<MaintenanceEntity>) {
         const i = this.data.findIndex(m => m.id === id);
         if (i < 0) {
@@ -64,7 +68,8 @@ export class MaintenanceMemoryRepositoryService implements MaintenanceRepository
         return updated;
     }
 
+    // Elimina un mantenimiento en memoria
     async remove(id: string) {
-        this.data = this.data.filter(m => m.id === id);
+        this.data = this.data.filter(m => m.id !== id);
     }
 }

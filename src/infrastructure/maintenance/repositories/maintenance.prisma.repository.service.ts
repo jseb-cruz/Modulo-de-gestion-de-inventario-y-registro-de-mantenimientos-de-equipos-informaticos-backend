@@ -30,16 +30,19 @@ function toNotesInput(notes?: string): Prisma.InputJsonValue | undefined {
 export class MaintenancePrismaRepositoryService implements MaintenanceRepository {
     constructor(private readonly prisma: PrismaService) { }
 
+    // Lista mantenimientos desde la base de datos
     async findAll(): Promise<MaintenanceEntity[]> {
         const rows = await this.prisma.maintenance.findMany();
         return rows.map(toEntity);
     }
 
+    // Busca un mantenimiento por id
     async findById(id: string): Promise<MaintenanceEntity | null> {
         const r = await this.prisma.maintenance.findUnique({ where: { id } });
         return r ? toEntity(r) : null;
     }
 
+    // Inserta un registro de mantenimiento
     async create(input: MaintenanceEntity): Promise<MaintenanceEntity> {
         const notesValue = toNotesInput(input.notes);
         const r = await this.prisma.maintenance.create({
@@ -58,6 +61,7 @@ export class MaintenancePrismaRepositoryService implements MaintenanceRepository
         return toEntity(r);
     }
 
+    // Actualiza campos parciales de un mantenimiento
     async update(id: string, patch: Partial<MaintenanceEntity>): Promise<MaintenanceEntity> {
         const notesValue = toNotesInput(patch.notes);
         const r = await this.prisma.maintenance.update({
@@ -76,6 +80,7 @@ export class MaintenancePrismaRepositoryService implements MaintenanceRepository
         return toEntity(r);
     }
 
+    // Borra un mantenimiento por id
     async remove(id: string): Promise<void> {
         await this.prisma.maintenance.delete({ where: { id } });
     }
